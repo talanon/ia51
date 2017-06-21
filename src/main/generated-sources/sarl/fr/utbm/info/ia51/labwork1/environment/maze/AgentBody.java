@@ -21,8 +21,8 @@
 package fr.utbm.info.ia51.labwork1.environment.maze;
 
 import fr.utbm.info.ia51.framework.math.Point2i;
-import fr.utbm.info.ia51.labwork1.environment.maze.Maze;
 import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
+import fr.utbm.info.ia51.labwork1.environment.maze.Maze;
 import io.sarl.lang.annotation.SarlElementType;
 import io.sarl.lang.annotation.SarlSpecification;
 import io.sarl.lang.annotation.SyntheticMember;

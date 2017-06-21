@@ -24,12 +24,10 @@ import fr.utbm.info.ia51.framework.math.Point2i
 import fr.utbm.info.ia51.labwork1.environment.^agent.Controller
 import fr.utbm.info.ia51.labwork1.environment.^agent.EnvironmentEvent
 import fr.utbm.info.ia51.labwork1.environment.^agent.EnvironmentListener
-import fr.utbm.info.ia51.labwork1.environment.^agent.Player
 import fr.utbm.info.ia51.labwork1.environment.maze.Direction
-import fr.utbm.info.ia51.labwork1.environment.maze.GhostBody
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanBody
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanObject
-import fr.utbm.info.ia51.labwork1.environment.maze.PillObject
+import fr.utbm.info.ia51.labwork1.environment.maze.DriverBody
+import fr.utbm.info.ia51.labwork1.environment.maze.GovBody
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject
 import fr.utbm.info.ia51.labwork1.environment.maze.WallObject
 import java.awt.BorderLayout
 import java.awt.Color
@@ -62,7 +60,7 @@ import static java.lang.Math.*
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-class PacManGUI extends JFrame implements KeyListener, EnvironmentListener {
+class CityGUI extends JFrame implements KeyListener, EnvironmentListener {
 
 	/** Width in pixels of a cell.
 	 */
@@ -88,8 +86,6 @@ class PacManGUI extends JFrame implements KeyListener, EnvironmentListener {
 	
 	val waitingDuration : long 
 	
-	var player : Player 
-	
 	var controller : Controller 
 
 	/**
@@ -97,17 +93,17 @@ class PacManGUI extends JFrame implements KeyListener, EnvironmentListener {
 	 */
 	new (waitingDuration : long) {
 		this.waitingDuration = waitingDuration
-		this.title = Locale::getString("FRAME_TITLE")
-		var pacmanIcon = Resources::getResource(typeof(PacManGUI), "pacman.png")
+		this.title = Locale::getString("TrafficSimulation")
+		var pacmanIcon = Resources::getResource(typeof(CityGUI), "pacman.png")
 		this.iconImage = ImageIO::read(pacmanIcon)
 		var iconURL = Resources::getResource(this.class, "play.png")
 		this.startButton = new JButton(new ImageIcon(iconURL))
 		this.startButton.toolTipText = Locale::getString("START")
 		this.startButton.enabled = false
 		this.startButton.addActionListener [
-			var ctrl = PacManGUI.this.controller
+			var ctrl = CityGUI.this.controller
 			if (ctrl !== null && !ctrl.started) {
-				PacManGUI.this.startButton.enabled = false
+				CityGUI.this.startButton.enabled = false
 				ctrl.startSimulation
 			}
 		]
@@ -126,17 +122,6 @@ class PacManGUI extends JFrame implements KeyListener, EnvironmentListener {
 		pack
 	}
 
-	def bindPlayer(player : Player) : void {
-		synchronized(this) {
-			this.player = player
-		}
-	}
-
-	def unbindPlayer(player : Player) : void {
-		synchronized(this) {
-			this.player = null
-		}
-	}
 
 	def bindController(controller : Controller) : void {
 		synchronized(this) {
@@ -150,15 +135,6 @@ class PacManGUI extends JFrame implements KeyListener, EnvironmentListener {
 			this.startButton.enabled = false
 			this.controller = null
 		}
-	}
-	
-	def gameOver : void {
-		this.visible = false
-		JOptionPane::showMessageDialog(this,
-				Locale::getString(typeof(PacManGUI), "GAME_OVER"),
-				this.title,
-				JOptionPane::INFORMATION_MESSAGE)
-		dispose
 	}
 
 	def environmentChanged(^event : EnvironmentEvent) : void {
@@ -182,32 +158,6 @@ class PacManGUI extends JFrame implements KeyListener, EnvironmentListener {
 		}
 	}
 
-	def keyPressed(e : KeyEvent) {
-		var player : Player 
-		synchronized(this) {
-			player = this.player
-		}
-		if (player !== null) {
-			switch(e.keyCode) {
-			case KeyEvent::VK_LEFT:
-				player.move(Direction::WEST)
-			case KeyEvent::VK_RIGHT:
-				player.move(Direction::EAST)
-			case KeyEvent::VK_UP:
-				player.move(Direction::NORTH)
-			case KeyEvent::VK_DOWN:
-				player.move(Direction::SOUTH)
-			}
-		}
-	}
-
-	def keyReleased(e : KeyEvent) {
-		//
-	}
-
-	def keyTyped(e : KeyEvent) {
-		//
-	}
 
 	/**
 	 * Swing panel that is displaying the environment state.
@@ -219,14 +169,14 @@ class PacManGUI extends JFrame implements KeyListener, EnvironmentListener {
 	 */
 	private static class GridPanel extends JPanel {
 
-		var objects : Map<Point2i, PacmanObject> 
+		var objects : Map<Point2i, CityObject> 
 		var time = new AtomicInteger
 
 		new {
 			this.background = Color::BLACK
 		}
 
-		def setObjects(time : int, objects : Map<Point2i, PacmanObject>) {
+		def setObjects(time : int, objects : Map<Point2i, CityObject>) {
 			synchronized(this.treeLock) {
 				this.time.set(time)
 				this.objects = objects
@@ -253,12 +203,8 @@ class PacManGUI extends JFrame implements KeyListener, EnvironmentListener {
 						g2d.color = Color::BLUE
 						g2d.fillRect(px, py, CELL_WIDTH, CELL_HEIGHT)
 					}
-					else if (obj instanceof PacmanBody) {
-						if (obj.superPacman) {
-							g2d.color = Color::MAGENTA
-						} else {
+					else if (obj instanceof DriverBody) {
 							g2d.color = Color::YELLOW
-						}
 						if (isEvenTime) {
 							g2d.fillArc(
 									px + 1, py + 1, CELL_WIDTH - 2, CELL_HEIGHT - 2,
@@ -275,7 +221,7 @@ class PacManGUI extends JFrame implements KeyListener, EnvironmentListener {
 						if (!isEvenTime) eyex++
 						g2d.fillOval(eyex, eyey, 4, 4)
 					}
-					else if (obj instanceof GhostBody) {
+					else if (obj instanceof GovBody) {
 						g2d.color = Color::WHITE
 
 						g2d.fillArc(
@@ -328,16 +274,8 @@ class PacManGUI extends JFrame implements KeyListener, EnvironmentListener {
 						g2d.color = this.background
 						g2d.fillOval(eyex, eyey, 5, 5)
 
-					} else if (obj instanceof PillObject) {
-						if (obj.superPill) {
-							g2d.color = Color::MAGENTA
-							if (isEvenTime) {
-								g2d.fillOval(px + DEMI_CELL_WIDTH - 4, py + DEMI_CELL_HEIGHT - 4, 8, 8)
-							}
-							else {
-								g2d.fillOval(px + DEMI_CELL_WIDTH - 5, py + DEMI_CELL_HEIGHT - 5, 10, 10)
-							}
-						} else {
+					} 
+					else {
 							g2d.color = Color::WHITE
 							if (isEvenTime) {
 								g2d.fillOval(px + DEMI_CELL_WIDTH - 2, py + DEMI_CELL_HEIGHT - 2, 4, 4)

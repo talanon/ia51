@@ -103,5 +103,5 @@ public class Perception extends Event {
   }
   
   @SyntheticMember
-  private final static long serialVersionUID = 809217616L;
+  private final static long serialVersionUID = -3404424438L;
 }

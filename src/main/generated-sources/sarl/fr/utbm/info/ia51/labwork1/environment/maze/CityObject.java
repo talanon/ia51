@@ -113,12 +113,6 @@ public abstract class CityObject implements Serializable {
   @Pure
   public abstract boolean isOccluder();
   
-  /**
-   * Replies if this object could be pick by the agents.
-   */
-  @Pure
-  public abstract boolean isPickable();
-  
   @SyntheticMember
-  private final static long serialVersionUID = 3774520129L;
+  private final static long serialVersionUID = 4031564400L;
 }

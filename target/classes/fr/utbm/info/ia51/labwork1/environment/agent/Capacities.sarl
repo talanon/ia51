@@ -23,12 +23,10 @@ package fr.utbm.info.ia51.labwork1.environment.^agent
 import fr.utbm.info.ia51.framework.math.Point2i
 import fr.utbm.info.ia51.labwork1.environment.maze.AgentBody
 import fr.utbm.info.ia51.labwork1.environment.maze.Direction
-import fr.utbm.info.ia51.labwork1.environment.maze.GhostBody
+import fr.utbm.info.ia51.labwork1.environment.maze.DriverBody
 import fr.utbm.info.ia51.labwork1.environment.maze.Maze
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanBody
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanObject
-import fr.utbm.info.ia51.labwork1.environment.maze.PillObject
-import fr.utbm.info.ia51.labwork1.environment.maze.SuperPowerAccessor
+import fr.utbm.info.ia51.labwork1.environment.maze.GovBody
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject
 import io.sarl.core.Behaviors
 import io.sarl.core.DefaultContextInteractions
 import io.sarl.core.Lifecycle
@@ -52,12 +50,8 @@ capacity MazeManager {
 	/** Replies the number of bodies in the maze */
 	def getBodyCount : int
 	
-	/** Apply the list of actions.
-	 * @return true if the pacman is dead. */
-	def applyActions(actions : List<MazeChangeQuery>) : boolean
-	
 	/** Replies the perceptions. */
-	def getPerceptions : Map<AgentBody, List<PacmanObject>>
+	def getPerceptions : Map<AgentBody, List<CityObject>>
 	
 	/** Replies the width of the maze. */
 	def getMazeWidth : int
@@ -66,19 +60,17 @@ capacity MazeManager {
 	def getMazeHeight : int
 	
 	/** Replies all the objects. */
-	def getPacmanObjects : List<PacmanObject>
+	def getCityObjects : List<CityObject>
 
 	/** Replies a specific body. */
 	def getAgentBody(id : UUID) : AgentBody
+
+	/** Create a driver body. */
+	def createDriver(perceptionDistance : int) : DriverBody
 	
-	/** Replies super power accessor. */
-	def getSuperPowerAccessor(id : UUID) : SuperPowerAccessor
+	/** Create a gov body.*/
+	def createGov(perceptionDistance : int) : GovBody
 
-	/** Create a ghost body. */
-	def createGhost(perceptionDistance : int) : GhostBody
-
-	/** Create a pacman body. */
-	def createPacman() : PacmanBody
 
 }
 
@@ -91,7 +83,7 @@ capacity MazeManager {
  */
 capacity MazeFrontEnd {
 	
-	def sendPerception(time : int, bodyID : UUID, objects : List<PacmanObject>, position : Point2i)
+	def sendPerception(time : int, bodyID : UUID, objects : List<CityObject>, position : Point2i)
 
 }
 
@@ -141,14 +133,8 @@ skill DefaultMazeManagerSkill implements MazeManager {
 		this.maze.bodyCount
 	}
 	
-	def applyActions(actions : List<MazeChangeQuery>) : boolean {
-		// If this function replies true then the game is over.
-		// If this function replies false then the game continue.
-		// TODO Write the action application algorithm
-		return false
-	}
 	
-	def getPerceptions : Map<AgentBody, List<PacmanObject>> {
+	def getPerceptions : Map<AgentBody, List<CityObject>> {
 		var perceptions = new TreeMap
 		// TODO Write the perception algorithm
 		return perceptions
@@ -162,7 +148,7 @@ skill DefaultMazeManagerSkill implements MazeManager {
 		this.width
 	}
 	
-	def getPacmanObjects : List<PacmanObject> {
+	def getCityObjects : List<CityObject> {
 		var list = newArrayList
 		for (i : 0..<this.width) {
 			for (j : 0..<this.height) {
@@ -179,17 +165,14 @@ skill DefaultMazeManagerSkill implements MazeManager {
 		this.maze.getAgentBody(id)
 	}
 
-	def getSuperPowerAccessor(id : UUID) : SuperPowerAccessor {
-		this.maze.getSuperPowerAccessorFor(id)
+	def createDriver(perceptionDistance : int) : DriverBody {
+		this.maze.createBody(typeof(DriverBody), null, perceptionDistance);
 	}
 
-	def createGhost(perceptionDistance : int) : GhostBody {
-		this.maze.createBody(typeof(GhostBody), null, perceptionDistance);
+	def createGov(perceptionDistance : int) : GovBody {
+		this.maze.createBody(typeof(GovBody), null, perceptionDistance);
 	}
 	
-	def createPacman : PacmanBody {
-		this.maze.createBody(typeof(PacmanBody), null, 0);
-	}
 	
 }
 
@@ -217,7 +200,7 @@ skill DefaultMazeFrontEndSkill implements MazeFrontEnd {
 		}
 	}
 	
-	def sendPerception(time : int, bodyID : UUID, objects : List<PacmanObject>, position : Point2i) {
+	def sendPerception(time : int, bodyID : UUID, objects : List<CityObject>, position : Point2i) {
 		var p = new Perception(time, bodyID, objects, position)
 		this.mazeSpace.notifyPerception(p)
 	}

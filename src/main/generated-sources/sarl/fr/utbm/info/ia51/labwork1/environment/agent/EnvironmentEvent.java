@@ -111,5 +111,5 @@ public class EnvironmentEvent extends EventObject {
   }
   
   @SyntheticMember
-  private final static long serialVersionUID = 3335358385L;
+  private final static long serialVersionUID = 482307921L;
 }

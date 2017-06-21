@@ -31,7 +31,7 @@ import fr.utbm.info.ia51.framework.math.Point2i
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-abstract class AgentBody extends PacmanObject implements Comparable<AgentBody> {
+abstract class AgentBody extends CityObject implements Comparable<AgentBody> {
 
 	val agentId : UUID
 	val perceptionDistance : int 

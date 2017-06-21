@@ -33,11 +33,10 @@ import fr.utbm.info.ia51.framework.math.Point2i
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-class PacmanBody extends AgentBody {
-
-	static val SUPER_POWER = 10
+class GovBody extends AgentBody {
 	
-	var superPower : int 
+	val IN_ALERT = 0
+	var inAlert : int 
 	
 	new (x : int, y : int, maze : Maze, agentId : UUID, perceptionDistance : int) {
 		super(x, y, maze, agentId, perceptionDistance)
@@ -47,29 +46,25 @@ class PacmanBody extends AgentBody {
 		super(position, maze, agentId, perceptionDistance)
 	}
 	
-	@Pure
-	def isPickable : boolean {
-		true
-	}
 
-	/** Replies if the pacman body has super power.
+	/** Replies if the gov body has an urgency.
 	 */
 	@Pure
-	def isSuperPacman : boolean {
-		this.superPower > 0
+	def isInAlert : boolean {
+		this.inAlert > 0
 	}
 
-	/** Set if the pacman body has super power.
+	/** Set if the gov body has an urgency.
 	 */
-	package def resetSuperPower : void {
-		this.superPower = SUPER_POWER
+	package def resetInAlert : void {
+		this.inAlert = IN_ALERT
 	}
 
-	/** Decrease the super power.
+	/** Decrease the urgency.
 	 */
 	package def decreaseSuperPower : void {
-		if (this.superPower > 0) {
-			this.superPower--
+		if (this.inAlert > 0) {
+			this.inAlert--
 		}
 	}
 

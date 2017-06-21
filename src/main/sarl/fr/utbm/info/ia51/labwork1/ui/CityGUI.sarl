@@ -24,7 +24,6 @@ import fr.utbm.info.ia51.framework.math.Point2i
 import fr.utbm.info.ia51.labwork1.environment.^agent.Controller
 import fr.utbm.info.ia51.labwork1.environment.^agent.EnvironmentEvent
 import fr.utbm.info.ia51.labwork1.environment.^agent.EnvironmentListener
-import fr.utbm.info.ia51.labwork1.environment.^agent.Driver
 import fr.utbm.info.ia51.labwork1.environment.maze.Direction
 import fr.utbm.info.ia51.labwork1.environment.maze.DriverBody
 import fr.utbm.info.ia51.labwork1.environment.maze.GovBody
@@ -87,8 +86,6 @@ class CityGUI extends JFrame implements KeyListener, EnvironmentListener {
 	
 	val waitingDuration : long 
 	
-	var driver : Driver 
-	
 	var controller : Controller 
 
 	/**
@@ -96,7 +93,7 @@ class CityGUI extends JFrame implements KeyListener, EnvironmentListener {
 	 */
 	new (waitingDuration : long) {
 		this.waitingDuration = waitingDuration
-		this.title = Locale::getString("FRAME_TITLE")
+		this.title = Locale::getString("TrafficSimulation")
 		var pacmanIcon = Resources::getResource(typeof(CityGUI), "pacman.png")
 		this.iconImage = ImageIO::read(pacmanIcon)
 		var iconURL = Resources::getResource(this.class, "play.png")
@@ -125,17 +122,6 @@ class CityGUI extends JFrame implements KeyListener, EnvironmentListener {
 		pack
 	}
 
-	def bindDriver(driver : Driver) : void {
-		synchronized(this) {
-			this.driver = driver
-		}
-	}
-
-	def unbindDriver(driver : Driver) : void {
-		synchronized(this) {
-			this.driver = null
-		}
-	}
 
 	def bindController(controller : Controller) : void {
 		synchronized(this) {
@@ -149,15 +135,6 @@ class CityGUI extends JFrame implements KeyListener, EnvironmentListener {
 			this.startButton.enabled = false
 			this.controller = null
 		}
-	}
-	
-	def gameOver : void {
-		this.visible = false
-		JOptionPane::showMessageDialog(this,
-				Locale::getString(typeof(CityGUI), "GAME_OVER"),
-				this.title,
-				JOptionPane::INFORMATION_MESSAGE)
-		dispose
 	}
 
 	def environmentChanged(^event : EnvironmentEvent) : void {
@@ -181,32 +158,6 @@ class CityGUI extends JFrame implements KeyListener, EnvironmentListener {
 		}
 	}
 
-	def keyPressed(e : KeyEvent) {
-		var driver : Driver 
-		synchronized(this) {
-			driver = this.driver
-		}
-		if (driver !== null) {
-			switch(e.keyCode) {
-			case KeyEvent::VK_LEFT:
-				driver.move(Direction::WEST)
-			case KeyEvent::VK_RIGHT:
-				driver.move(Direction::EAST)
-			case KeyEvent::VK_UP:
-				driver.move(Direction::NORTH)
-			case KeyEvent::VK_DOWN:
-				driver.move(Direction::SOUTH)
-			}
-		}
-	}
-
-	def keyReleased(e : KeyEvent) {
-		//
-	}
-
-	def keyTyped(e : KeyEvent) {
-		//
-	}
 
 	/**
 	 * Swing panel that is displaying the environment state.

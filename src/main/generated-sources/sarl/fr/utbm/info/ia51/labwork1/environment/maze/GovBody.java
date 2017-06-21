@@ -27,7 +27,6 @@ import io.sarl.lang.annotation.SarlElementType;
 import io.sarl.lang.annotation.SarlSpecification;
 import io.sarl.lang.annotation.SyntheticMember;
 import java.util.UUID;
-import org.eclipse.xtext.xbase.lib.Inline;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 /**
@@ -42,9 +41,9 @@ import org.eclipse.xtext.xbase.lib.Pure;
 @SarlElementType(8)
 @SuppressWarnings("all")
 public class GovBody extends AgentBody {
-  private final static int SUPER_POWER = 10;
+  private final int IN_ALERT = 0;
   
-  private int superPower;
+  private int inAlert;
   
   public GovBody(final int x, final int y, final Maze maze, final UUID agentId, final int perceptionDistance) {
     super(x, y, maze, agentId, perceptionDistance);
@@ -54,33 +53,27 @@ public class GovBody extends AgentBody {
     super(position, maze, agentId, perceptionDistance);
   }
   
-  @Pure
-  @Inline(value = "true", constantExpression = true)
-  public boolean isPickable() {
-    return true;
-  }
-  
   /**
-   * Replies if the pacman body has super power.
+   * Replies if the gov body has an urgency.
    */
   @Pure
-  public boolean isSuperPacman() {
-    return (this.superPower > 0);
+  public boolean isInAlert() {
+    return (this.inAlert > 0);
   }
   
   /**
-   * Set if the pacman body has super power.
+   * Set if the gov body has an urgency.
    */
-  void resetSuperPower() {
-    this.superPower = GovBody.SUPER_POWER;
+  void resetInAlert() {
+    this.inAlert = this.IN_ALERT;
   }
   
   /**
-   * Decrease the super power.
+   * Decrease the urgency.
    */
   void decreaseSuperPower() {
-    if ((this.superPower > 0)) {
-      this.superPower--;
+    if ((this.inAlert > 0)) {
+      this.inAlert--;
     }
   }
   
@@ -95,7 +88,9 @@ public class GovBody extends AgentBody {
     if (getClass() != obj.getClass())
       return false;
     GovBody other = (GovBody) obj;
-    if (other.superPower != this.superPower)
+    if (other.IN_ALERT != this.IN_ALERT)
+      return false;
+    if (other.inAlert != this.inAlert)
       return false;
     return super.equals(obj);
   }
@@ -106,10 +101,11 @@ public class GovBody extends AgentBody {
   public int hashCode() {
     int result = super.hashCode();
     final int prime = 31;
-    result = prime * result + this.superPower;
+    result = prime * result + this.IN_ALERT;
+    result = prime * result + this.inAlert;
     return result;
   }
   
   @SyntheticMember
-  private final static long serialVersionUID = 830999037L;
+  private final static long serialVersionUID = 1273422807L;
 }

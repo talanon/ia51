@@ -27,8 +27,6 @@ import io.sarl.lang.annotation.SarlElementType;
 import io.sarl.lang.annotation.SarlSpecification;
 import io.sarl.lang.annotation.SyntheticMember;
 import java.util.UUID;
-import org.eclipse.xtext.xbase.lib.Inline;
-import org.eclipse.xtext.xbase.lib.Pure;
 
 /**
  * The body of a ghost.
@@ -50,12 +48,6 @@ public class DriverBody extends AgentBody {
     super(position, maze, agentId, perceptionDistance);
   }
   
-  @Pure
-  @Inline(value = "false", constantExpression = true)
-  public final boolean isPickable() {
-    return false;
-  }
-  
   @SyntheticMember
-  private final static long serialVersionUID = 2817167867L;
+  private final static long serialVersionUID = 3074212138L;
 }

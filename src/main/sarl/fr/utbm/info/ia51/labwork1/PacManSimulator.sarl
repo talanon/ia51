@@ -24,7 +24,7 @@ import io.janusproject.Boot
 import io.janusproject.util.LoggerCreator
 
 import java.util.logging.Level
-import fr.utbm.info.ia51.labwork1.ui.PacManGUI
+import fr.utbm.info.ia51.labwork1.ui.CityGUI
 import fr.utbm.info.ia51.labwork1.environment.^agent.Environment
 
 /**
@@ -35,7 +35,7 @@ import fr.utbm.info.ia51.labwork1.environment.^agent.Environment
  * @author St&eacute;phane GALLAND &lt;stephane.galland@utbm.fr&gt;
  * @version $Name$ $Revision$ $Date$
  */
-class PacManSimulator {
+class TrafficSimulator {
 	
 	/** Width of the world (in number of cells).
 	 */
@@ -45,11 +45,11 @@ class PacManSimulator {
 	 */
 	public static val HEIGHT = 25
 
-	/** Number of ghosts at the start-up.
+	/** Number of drivers at the start-up.
 	 */
-	public static val NB_GHOSTS = 3
+	public static val NB_CARS = 5
 	
-	/** Percpetion distance for the agents (usually the ghosts).
+	/** Percpetion distance for the agents.
 	 */
 	public static val PERCEPTION_DISTANCE = 5
 	
@@ -62,14 +62,14 @@ class PacManSimulator {
 		Boot::setVerboseLevel(LoggerCreator::toInt(Level::INFO))
 		Boot::showJanusLogo
 		
-		var ui = new PacManGUI(WAITING_DURATION)
+		var ui = new CityGUI(WAITING_DURATION)
 		
 		Boot::startJanus(
 				null,
 				typeof(Environment),
 				WIDTH,
 				HEIGHT,
-				NB_GHOSTS,
+				NB_CARS,
 				PERCEPTION_DISTANCE,
 				ui)
 	}

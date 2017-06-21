@@ -26,10 +26,9 @@ import fr.utbm.info.ia51.labwork1.environment.^agent.EnvironmentEvent
 import fr.utbm.info.ia51.labwork1.environment.^agent.EnvironmentListener
 import fr.utbm.info.ia51.labwork1.environment.^agent.Driver
 import fr.utbm.info.ia51.labwork1.environment.maze.Direction
-import fr.utbm.info.ia51.labwork1.environment.maze.GhostBody
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanBody
+import fr.utbm.info.ia51.labwork1.environment.maze.DriverBody
+import fr.utbm.info.ia51.labwork1.environment.maze.GovBody
 import fr.utbm.info.ia51.labwork1.environment.maze.CityObject
-import fr.utbm.info.ia51.labwork1.environment.maze.PillObject
 import fr.utbm.info.ia51.labwork1.environment.maze.WallObject
 import java.awt.BorderLayout
 import java.awt.Color

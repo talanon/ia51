@@ -21,8 +21,8 @@
 package fr.utbm.info.ia51.labwork1.environment.^agent
 
 import fr.utbm.info.ia51.framework.math.Point2i
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanObject
-import fr.utbm.info.ia51.labwork1.players.Ghost
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject
+import fr.utbm.info.ia51.labwork1.players.Driver
 import io.sarl.core.DefaultContextInteractions
 import io.sarl.core.Destroy
 import io.sarl.core.Initialize
@@ -44,7 +44,7 @@ agent Environment {
 	uses MazeManager, MazeFrontEnd, DefaultContextInteractions, Lifecycle
 	
 	var listeners = <EnvironmentListener>newArrayList
-	var player : Player
+	var driver : Driver
 	var controller : Controller
 	var time = 0
 	val actions = <MazeChangeQuery>newLinkedList
@@ -52,7 +52,7 @@ agent Environment {
 	on Initialize {
 		var width = occurrence.parameters.get(0) as Integer
 		var height = occurrence.parameters.get(1) as Integer
-		var nbGhosts = occurrence.parameters.get(2) as Integer
+		var nbCars = occurrence.parameters.get(2) as Integer
 		var perceptionDistance = occurrence.parameters.get(3) as Integer
 		for (i : 4..<occurrence.parameters.size) {
 			var o = occurrence.parameters.get(i)
@@ -63,11 +63,12 @@ agent Environment {
 		setSkill(new DefaultMazeManagerSkill(width, height), typeof(MazeManager))
 		setSkill(new DefaultMazeFrontEndSkill(), typeof(MazeFrontEnd))
 		this.controller = new Controller(defaultSpace, defaultAddress)
-		var pacmanBody = createPacman
-		this.player = new Player(pacmanBody.agentId, Logger::getLogger(ID.toString))
-		for (i : 0..<nbGhosts) {
-			var ghostBody = createGhost(perceptionDistance)
-			spawnInContextWithID(typeof(Ghost), ghostBody.agentId, defaultContext)
+		/*var pacmanBody = createPacman
+		this.player = new Player(pacmanBody.agentId, Logger::getLogger(ID.toString))*/
+		for (i : 0..<nbCars) {
+			//mettre un faible random pour faire pop les gov
+			var driverBody = createDriver(perceptionDistance)
+			spawnInContextWithID(typeof(Driver), driverBody.agentId, defaultContext)
 		}
 		firePlayerBinding
 		fireControllerBinding
@@ -75,8 +76,8 @@ agent Environment {
 	}
 	
 	def fireEnvironmentChange {
-		var objects = new TreeMap<Point2i, PacmanObject>
-		for (obj : getPacmanObjects) {
+		var objects = new TreeMap<Point2i, CityObject>
+		for (obj : getCityObjects) {
 			objects.put(obj.position, obj)
 		}
 		var ^event = new EnvironmentEvent(ID, this.time, mazeWidth, mazeHeight, Collections::unmodifiableMap(objects))
@@ -87,13 +88,13 @@ agent Environment {
 	
 	def firePlayerBinding {
 		for (listener : this.listeners) {
-			listener.bindPlayer(this.player)
+			listener.bindDriver(this.driver)
 		}
 	}
 
 	def firePlayerUnbinding {
 		for (listener : this.listeners) {
-			listener.unbindPlayer(this.player)
+			listener.unbindDriver(this.driver)
 		}
 	}
 
@@ -109,11 +110,11 @@ agent Environment {
 		}
 	}
 
-	def fireGameOver {
+	/*def fireGameOver {
 		for (listener : this.listeners) {
 			listener.gameOver()
 		}
-	}
+	}*/
 
 	on Destroy {
 		firePlayerUnbinding
@@ -134,21 +135,11 @@ agent Environment {
 	
 	on RunEndOfStep {
 		synchronized(this) {
-			// Endogenous behavior: move the pacman from the player's action
-			var avatarDirection = this.player.direction
-			var avatarAction = new MazeChangeQuery(this.player.bodyId, avatarDirection)
+			// Endogenous behavior: move the gov from the player's action
+			var avatarDirection = this.driver.direction
+			var avatarAction = new MazeChangeQuery(this.driver.bodyId, avatarDirection)
 			this.actions += avatarAction
 
-			// Endogenous behavior: decrease the super power of Pacman
-			getSuperPowerAccessor(this.player.bodyId).decreaseSuperPower
-
-			// Change the state of the universe
-			if (applyActions(this.actions)) {
-				// Pacman is dead.
-				emit(new PacManIsDead)
-				fireGameOver
-				killMe
-			}
 			
 			// Increase time
 			this.time++

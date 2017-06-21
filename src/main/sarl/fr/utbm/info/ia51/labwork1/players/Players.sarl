@@ -27,20 +27,19 @@ import io.sarl.core.Lifecycle
 import java.util.List
 import java.util.Random
 import fr.utbm.info.ia51.labwork1.environment.maze.Direction
-import fr.utbm.info.ia51.labwork1.environment.^agent.PacManIsDead
 import fr.utbm.info.ia51.labwork1.environment.^agent.Perception
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanBody
+import fr.utbm.info.ia51.labwork1.environment.maze.DriverBody
 import fr.utbm.info.ia51.labwork1.environment.^agent.MazeMotion
 import fr.utbm.info.ia51.labwork1.environment.^agent.DefaultMazeMotionSkill
 
-/** Ghost.
+/** Driver.
  * 
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-agent Ghost {
+agent Driver {
 	
 	uses MazeMotion, Lifecycle
 
@@ -51,12 +50,13 @@ agent Ghost {
 		setSkill(new DefaultMazeMotionSkill)
 	}
 	
-	on PacManIsDead {
+	// TODO write the destination reached event
+	on DestinationReached {
 		killMe
 	}
 
 	on Perception {
-		// TODO Write the Gohst behavior
+		// TODO Write the driver behavior
 	}
 
 }

@@ -21,7 +21,7 @@
 package fr.utbm.info.ia51.labwork1.environment.^agent
 
 import fr.utbm.info.ia51.framework.math.Point2i
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanObject
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject
 import java.util.List
 import java.util.UUID
 import fr.utbm.info.ia51.labwork1.environment.maze.Direction
@@ -36,11 +36,11 @@ import fr.utbm.info.ia51.labwork1.environment.maze.Direction
 event Perception {
 	
 	val time : int
-	val objects : List<PacmanObject>
+	val objects : List<CityObject>
 	val position : Point2i
 	val bodyId : UUID
 	
-	new (time : int, bodyID : UUID, objects : List<PacmanObject>, position : Point2i) {
+	new (time : int, bodyID : UUID, objects : List<CityObject>, position : Point2i) {
 		this.time = time
 		this.bodyId = bodyID
 		this.objects = objects
@@ -86,12 +86,3 @@ event RunEndOfStep
  */
 event RunBeginingOfStep
 
-
-/** Run the pacman is dead.
- * 
- * @author $Author: sgalland$
- * @version $FullVersion$
- * @mavengroupid $GroupId$
- * @mavenartifactid $ArtifactId$
- */
-event PacManIsDead

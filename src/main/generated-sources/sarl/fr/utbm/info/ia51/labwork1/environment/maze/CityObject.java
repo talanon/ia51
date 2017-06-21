@@ -41,19 +41,19 @@ import org.eclipse.xtext.xbase.lib.Pure;
 @SarlSpecification("0.5")
 @SarlElementType(8)
 @SuppressWarnings("all")
-public abstract class PacmanObject implements Serializable {
+public abstract class CityObject implements Serializable {
   private final Point2i position;
   
   private final transient WeakReference<Maze> maze;
   
-  public PacmanObject(final int x, final int y, final Maze maze) {
+  public CityObject(final int x, final int y, final Maze maze) {
     Point2i _point2i = new Point2i(x, y);
     this.position = _point2i;
     WeakReference<Maze> _weakReference = new WeakReference<Maze>(maze);
     this.maze = _weakReference;
   }
   
-  public PacmanObject(final Point2i position, final Maze maze) {
+  public CityObject(final Point2i position, final Maze maze) {
     this(position.getX(), position.getY(), maze);
   }
   
@@ -64,7 +64,7 @@ public abstract class PacmanObject implements Serializable {
       return true;
     }
     if (((obj != null) && Objects.equal(this.getClass(), obj.getClass()))) {
-      PacmanObject o = ((PacmanObject) obj);
+      CityObject o = ((CityObject) obj);
       return Objects.equal(o.position, this.position);
     }
     return false;

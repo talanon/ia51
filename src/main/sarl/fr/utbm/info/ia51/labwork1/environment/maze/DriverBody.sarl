@@ -26,19 +26,15 @@ import org.eclipse.xtext.xbase.lib.Pure
 import fr.utbm.info.ia51.framework.math.Point2i
 
 /**
- * The body of the pacman.
+ * The body of a ghost.
  * 
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-class PacmanBody extends AgentBody {
+class DriverBody extends AgentBody {
 
-	static val SUPER_POWER = 10
-	
-	var superPower : int 
-	
 	new (x : int, y : int, maze : Maze, agentId : UUID, perceptionDistance : int) {
 		super(x, y, maze, agentId, perceptionDistance)
 	}
@@ -46,31 +42,10 @@ class PacmanBody extends AgentBody {
 	new (position : Point2i, maze : Maze, agentId : UUID, perceptionDistance : int) {
 		super(position, maze, agentId, perceptionDistance)
 	}
-	
+
 	@Pure
-	def isPickable : boolean {
-		true
-	}
-
-	/** Replies if the pacman body has super power.
-	 */
-	@Pure
-	def isSuperPacman : boolean {
-		this.superPower > 0
-	}
-
-	/** Set if the pacman body has super power.
-	 */
-	package def resetSuperPower : void {
-		this.superPower = SUPER_POWER
-	}
-
-	/** Decrease the super power.
-	 */
-	package def decreaseSuperPower : void {
-		if (this.superPower > 0) {
-			this.superPower--
-		}
+	final def isPickable : boolean {
+		false
 	}
 
 }

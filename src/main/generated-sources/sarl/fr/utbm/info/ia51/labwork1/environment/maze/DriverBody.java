@@ -31,7 +31,7 @@ import org.eclipse.xtext.xbase.lib.Inline;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 /**
- * The body of the pacman.
+ * The body of a ghost.
  * 
  * @author $Author: sgalland$
  * @version $FullVersion$
@@ -41,75 +41,21 @@ import org.eclipse.xtext.xbase.lib.Pure;
 @SarlSpecification("0.5")
 @SarlElementType(8)
 @SuppressWarnings("all")
-public class PacmanBody extends AgentBody {
-  private final static int SUPER_POWER = 10;
-  
-  private int superPower;
-  
-  public PacmanBody(final int x, final int y, final Maze maze, final UUID agentId, final int perceptionDistance) {
+public class DriverBody extends AgentBody {
+  public DriverBody(final int x, final int y, final Maze maze, final UUID agentId, final int perceptionDistance) {
     super(x, y, maze, agentId, perceptionDistance);
   }
   
-  public PacmanBody(final Point2i position, final Maze maze, final UUID agentId, final int perceptionDistance) {
+  public DriverBody(final Point2i position, final Maze maze, final UUID agentId, final int perceptionDistance) {
     super(position, maze, agentId, perceptionDistance);
   }
   
   @Pure
-  @Inline(value = "true", constantExpression = true)
-  public boolean isPickable() {
-    return true;
-  }
-  
-  /**
-   * Replies if the pacman body has super power.
-   */
-  @Pure
-  public boolean isSuperPacman() {
-    return (this.superPower > 0);
-  }
-  
-  /**
-   * Set if the pacman body has super power.
-   */
-  void resetSuperPower() {
-    this.superPower = PacmanBody.SUPER_POWER;
-  }
-  
-  /**
-   * Decrease the super power.
-   */
-  void decreaseSuperPower() {
-    if ((this.superPower > 0)) {
-      this.superPower--;
-    }
-  }
-  
-  @Override
-  @Pure
-  @SyntheticMember
-  public boolean equals(final Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    PacmanBody other = (PacmanBody) obj;
-    if (other.superPower != this.superPower)
-      return false;
-    return super.equals(obj);
-  }
-  
-  @Override
-  @Pure
-  @SyntheticMember
-  public int hashCode() {
-    int result = super.hashCode();
-    final int prime = 31;
-    result = prime * result + this.superPower;
-    return result;
+  @Inline(value = "false", constantExpression = true)
+  public final boolean isPickable() {
+    return false;
   }
   
   @SyntheticMember
-  private final static long serialVersionUID = 830999037L;
+  private final static long serialVersionUID = 2817167867L;
 }

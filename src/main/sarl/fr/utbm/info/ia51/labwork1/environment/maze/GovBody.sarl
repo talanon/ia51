@@ -20,27 +20,52 @@
  */
 package fr.utbm.info.ia51.labwork1.environment.maze
 
+import java.util.UUID
+
+import org.eclipse.xtext.xbase.lib.Pure
+import fr.utbm.info.ia51.framework.math.Point2i
 
 /**
- * Accessor for managing the super power of Pacman.
+ * The body of the pacman.
  * 
  * @author $Author: sgalland$
  * @version $FullVersion$
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-class SuperPowerAccessor {
-
-	/** Set if the pacman body has super power.
-	 */
-	def resetSuperPower {
-		//
+class GovBody extends AgentBody {
+	
+	val IN_ALERT = 0
+	var inAlert : int 
+	
+	new (x : int, y : int, maze : Maze, agentId : UUID, perceptionDistance : int) {
+		super(x, y, maze, agentId, perceptionDistance)
 	}
 
-	/** Decrease the super power.
-	 */
-	def decreaseSuperPower {
-		//
+	new (position : Point2i, maze : Maze, agentId : UUID, perceptionDistance : int) {
+		super(position, maze, agentId, perceptionDistance)
 	}
 	
+
+	/** Replies if the gov body has an urgency.
+	 */
+	@Pure
+	def isInAlert : boolean {
+		this.inAlert > 0
+	}
+
+	/** Set if the gov body has an urgency.
+	 */
+	package def resetInAlert : void {
+		this.inAlert = IN_ALERT
+	}
+
+	/** Decrease the urgency.
+	 */
+	package def decreaseSuperPower : void {
+		if (this.inAlert > 0) {
+			this.inAlert--
+		}
+	}
+
 }

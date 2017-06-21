@@ -21,7 +21,7 @@
 package fr.utbm.info.ia51.labwork1.environment.agent;
 
 import fr.utbm.info.ia51.framework.math.Point2i;
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanObject;
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
 import io.sarl.lang.annotation.SarlElementType;
 import io.sarl.lang.annotation.SarlSpecification;
 import io.sarl.lang.core.AgentTrait;
@@ -42,14 +42,14 @@ import java.util.UUID;
 @SarlElementType(17)
 @SuppressWarnings("all")
 public interface MazeFrontEnd extends Capacity {
-  public abstract void sendPerception(final int time, final UUID bodyID, final List<PacmanObject> objects, final Point2i position);
+  public abstract void sendPerception(final int time, final UUID bodyID, final List<CityObject> objects, final Point2i position);
   
   public static class ContextAwareCapacityWrapper<C extends MazeFrontEnd> extends Capacity.ContextAwareCapacityWrapper<C> implements MazeFrontEnd {
     public ContextAwareCapacityWrapper(final C capacity, final AgentTrait caller) {
       super(capacity, caller);
     }
     
-    public void sendPerception(final int time, final UUID bodyID, final List<PacmanObject> objects, final Point2i position) {
+    public void sendPerception(final int time, final UUID bodyID, final List<CityObject> objects, final Point2i position) {
       try {
         ensureCallerInLocalThread();
         this.capacity.sendPerception(time, bodyID, objects, position);

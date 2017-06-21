@@ -21,7 +21,7 @@
 package fr.utbm.info.ia51.labwork1.environment.agent;
 
 import fr.utbm.info.ia51.framework.math.Point2i;
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanObject;
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
 import io.sarl.lang.annotation.SarlElementType;
 import io.sarl.lang.annotation.SarlSpecification;
 import io.sarl.lang.annotation.SyntheticMember;
@@ -48,9 +48,9 @@ public class EnvironmentEvent extends EventObject {
   
   private final int height;
   
-  private final Map<Point2i, PacmanObject> objects;
+  private final Map<Point2i, CityObject> objects;
   
-  public EnvironmentEvent(final UUID source, final int time, final int width, final int height, final Map<Point2i, PacmanObject> objects) {
+  public EnvironmentEvent(final UUID source, final int time, final int width, final int height, final Map<Point2i, CityObject> objects) {
     super(source);
     this.time = time;
     this.width = width;
@@ -74,7 +74,7 @@ public class EnvironmentEvent extends EventObject {
   }
   
   @Pure
-  public Map<Point2i, PacmanObject> getObjects() {
+  public Map<Point2i, CityObject> getObjects() {
     return this.objects;
   }
   

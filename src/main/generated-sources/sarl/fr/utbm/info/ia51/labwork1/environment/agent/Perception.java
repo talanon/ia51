@@ -21,7 +21,7 @@
 package fr.utbm.info.ia51.labwork1.environment.agent;
 
 import fr.utbm.info.ia51.framework.math.Point2i;
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanObject;
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
 import io.sarl.lang.annotation.SarlElementType;
 import io.sarl.lang.annotation.SarlSpecification;
 import io.sarl.lang.annotation.SyntheticMember;
@@ -45,13 +45,13 @@ import org.eclipse.xtext.xbase.lib.Pure;
 public class Perception extends Event {
   public final int time;
   
-  public final List<PacmanObject> objects;
+  public final List<CityObject> objects;
   
   public final Point2i position;
   
   public final UUID bodyId;
   
-  public Perception(final int time, final UUID bodyID, final List<PacmanObject> objects, final Point2i position) {
+  public Perception(final int time, final UUID bodyID, final List<CityObject> objects, final Point2i position) {
     this.time = time;
     this.bodyId = bodyID;
     this.objects = objects;

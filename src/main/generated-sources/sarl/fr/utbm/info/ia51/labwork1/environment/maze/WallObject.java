@@ -22,7 +22,7 @@ package fr.utbm.info.ia51.labwork1.environment.maze;
 
 import fr.utbm.info.ia51.framework.math.Point2i;
 import fr.utbm.info.ia51.labwork1.environment.maze.Maze;
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanObject;
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
 import io.sarl.lang.annotation.SarlElementType;
 import io.sarl.lang.annotation.SarlSpecification;
 import io.sarl.lang.annotation.SyntheticMember;
@@ -40,7 +40,7 @@ import org.eclipse.xtext.xbase.lib.Pure;
 @SarlSpecification("0.5")
 @SarlElementType(8)
 @SuppressWarnings("all")
-public class WallObject extends PacmanObject {
+public class WallObject extends CityObject {
   public WallObject(final int x, final int y, final Maze maze) {
     super(x, y, maze);
   }

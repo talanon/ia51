@@ -23,8 +23,8 @@ package fr.utbm.info.ia51.labwork1.environment.maze;
 import fr.utbm.info.ia51.framework.math.Point2i;
 import fr.utbm.info.ia51.framework.math.Vector2i;
 import fr.utbm.info.ia51.labwork1.environment.maze.AgentBody;
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanBody;
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanObject;
+import fr.utbm.info.ia51.labwork1.environment.maze.GovBody;
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
 import fr.utbm.info.ia51.labwork1.environment.maze.PillObject;
 import fr.utbm.info.ia51.labwork1.environment.maze.SuperPowerAccessor;
 import fr.utbm.info.ia51.labwork1.environment.maze.WallObject;
@@ -116,7 +116,7 @@ public class Maze {
   /**
    * Matrix of the objects.
    */
-  private final PacmanObject[][] grid;
+  private final CityObject[][] grid;
   
   private final TreeMap<UUID, AgentBody> bodies = new TreeMap<UUID, AgentBody>();
   
@@ -142,8 +142,8 @@ public class Maze {
   public Maze(final int width, final int height) {
     this.width = width;
     this.height = height;
-    Object _newInstance = Array.newInstance(PacmanObject.class, width, height);
-    this.grid = ((PacmanObject[][]) _newInstance);
+    Object _newInstance = Array.newInstance(CityObject.class, width, height);
+    this.grid = ((CityObject[][]) _newInstance);
     this.buildWorld(this.width, this.height);
   }
   
@@ -157,7 +157,7 @@ public class Maze {
     this.buildMaze();
     for (int i = 0; (i < width); i++) {
       for (int j = 0; (j < height); j++) {
-        PacmanObject _get = this.grid[i][j];
+        CityObject _get = this.grid[i][j];
         boolean _tripleEquals = (_get == null);
         if (_tripleEquals) {
           PillObject _pillObject = new PillObject(i, j, this, false);
@@ -335,7 +335,7 @@ public class Maze {
    * @return the object or <code>null</code>.
    */
   @Pure
-  public PacmanObject getObjectAt(final int x, final int y) {
+  public CityObject getObjectAt(final int x, final int y) {
     if (((((x >= 0) && (x < this.width)) && (y >= 0)) && (y < this.height))) {
       return this.grid[x][y];
     }
@@ -350,9 +350,9 @@ public class Maze {
    * @param obj the object to put at the position
    * @return the object in the cell before the change.
    */
-  public PacmanObject setObjectAt(final int x, final int y, final PacmanObject obj) {
+  public CityObject setObjectAt(final int x, final int y, final CityObject obj) {
     if (((((x >= 0) && (x < this.width)) && (y >= 0)) && (y < this.height))) {
-      PacmanObject old = this.grid[x][y];
+      CityObject old = this.grid[x][y];
       this.grid[x][y] = obj;
       if ((obj != null)) {
         obj.setPosition(x, y);
@@ -369,7 +369,7 @@ public class Maze {
    * @param obj the object to put at the position
    * @return the object in the cell before the change.
    */
-  public PacmanObject setObjectAt(final Point2i position, final PacmanObject obj) {
+  public CityObject setObjectAt(final Point2i position, final CityObject obj) {
     return this.setObjectAt(position.getX(), position.getY(), obj);
   }
   
@@ -409,8 +409,8 @@ public class Maze {
     }
     
     AgentBody body = this.bodies.get(id);
-    if ((body instanceof PacmanBody)) {
-      final PacmanBody pacman = ((PacmanBody) body);
+    if ((body instanceof GovBody)) {
+      final GovBody pacman = ((GovBody) body);
       return new __Maze_0() {
         public void resetSuperPower() {
           pacman.resetSuperPower();

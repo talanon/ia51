@@ -27,7 +27,7 @@ import fr.utbm.info.ia51.labwork1.environment.agent.MazeSpace;
 import fr.utbm.info.ia51.labwork1.environment.agent.MazeSpaceSpecification;
 import fr.utbm.info.ia51.labwork1.environment.agent.MazeSpaceUtils;
 import fr.utbm.info.ia51.labwork1.environment.agent.Perception;
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanObject;
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
 import io.sarl.core.Behaviors;
 import io.sarl.core.DefaultContextInteractions;
 import io.sarl.core.Lifecycle;
@@ -73,7 +73,7 @@ public class DefaultMazeFrontEndSkill extends Skill implements MazeFrontEnd {
     }
   }
   
-  public void sendPerception(final int time, final UUID bodyID, final List<PacmanObject> objects, final Point2i position) {
+  public void sendPerception(final int time, final UUID bodyID, final List<CityObject> objects, final Point2i position) {
     Perception p = new Perception(time, bodyID, objects, position);
     this.mazeSpace.notifyPerception(p);
   }

@@ -22,7 +22,7 @@ package fr.utbm.info.ia51.labwork1.environment.maze;
 
 import fr.utbm.info.ia51.framework.math.Point2i;
 import fr.utbm.info.ia51.labwork1.environment.maze.Maze;
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanObject;
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
 import io.sarl.lang.annotation.SarlElementType;
 import io.sarl.lang.annotation.SarlSpecification;
 import io.sarl.lang.annotation.SyntheticMember;
@@ -42,7 +42,7 @@ import org.eclipse.xtext.xbase.lib.Pure;
 @SarlSpecification("0.5")
 @SarlElementType(8)
 @SuppressWarnings("all")
-public abstract class AgentBody extends PacmanObject implements Comparable<AgentBody> {
+public abstract class AgentBody extends CityObject implements Comparable<AgentBody> {
   private final UUID agentId;
   
   private final int perceptionDistance;

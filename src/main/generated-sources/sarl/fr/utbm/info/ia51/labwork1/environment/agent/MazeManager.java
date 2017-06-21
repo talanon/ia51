@@ -22,9 +22,9 @@ package fr.utbm.info.ia51.labwork1.environment.agent;
 
 import fr.utbm.info.ia51.labwork1.environment.agent.MazeChangeQuery;
 import fr.utbm.info.ia51.labwork1.environment.maze.AgentBody;
-import fr.utbm.info.ia51.labwork1.environment.maze.GhostBody;
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanBody;
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanObject;
+import fr.utbm.info.ia51.labwork1.environment.maze.DriverBody;
+import fr.utbm.info.ia51.labwork1.environment.maze.GovBody;
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
 import fr.utbm.info.ia51.labwork1.environment.maze.SuperPowerAccessor;
 import io.sarl.lang.annotation.SarlElementType;
 import io.sarl.lang.annotation.SarlSpecification;
@@ -60,7 +60,7 @@ public interface MazeManager extends Capacity {
   /**
    * Replies the perceptions.
    */
-  public abstract Map<AgentBody, List<PacmanObject>> getPerceptions();
+  public abstract Map<AgentBody, List<CityObject>> getPerceptions();
   
   /**
    * Replies the width of the maze.
@@ -75,7 +75,7 @@ public interface MazeManager extends Capacity {
   /**
    * Replies all the objects.
    */
-  public abstract List<PacmanObject> getPacmanObjects();
+  public abstract List<CityObject> getPacmanObjects();
   
   /**
    * Replies a specific body.
@@ -90,12 +90,12 @@ public interface MazeManager extends Capacity {
   /**
    * Create a ghost body.
    */
-  public abstract GhostBody createGhost(final int perceptionDistance);
+  public abstract DriverBody createGhost(final int perceptionDistance);
   
   /**
    * Create a pacman body.
    */
-  public abstract PacmanBody createPacman();
+  public abstract GovBody createPacman();
   
   public static class ContextAwareCapacityWrapper<C extends MazeManager> extends Capacity.ContextAwareCapacityWrapper<C> implements MazeManager {
     public ContextAwareCapacityWrapper(final C capacity, final AgentTrait caller) {
@@ -120,7 +120,7 @@ public interface MazeManager extends Capacity {
       }
     }
     
-    public Map<AgentBody, List<PacmanObject>> getPerceptions() {
+    public Map<AgentBody, List<CityObject>> getPerceptions() {
       try {
         ensureCallerInLocalThread();
         return this.capacity.getPerceptions();
@@ -147,7 +147,7 @@ public interface MazeManager extends Capacity {
       }
     }
     
-    public List<PacmanObject> getPacmanObjects() {
+    public List<CityObject> getPacmanObjects() {
       try {
         ensureCallerInLocalThread();
         return this.capacity.getPacmanObjects();
@@ -174,7 +174,7 @@ public interface MazeManager extends Capacity {
       }
     }
     
-    public GhostBody createGhost(final int perceptionDistance) {
+    public DriverBody createGhost(final int perceptionDistance) {
       try {
         ensureCallerInLocalThread();
         return this.capacity.createGhost(perceptionDistance);
@@ -183,7 +183,7 @@ public interface MazeManager extends Capacity {
       }
     }
     
-    public PacmanBody createPacman() {
+    public GovBody createPacman() {
       try {
         ensureCallerInLocalThread();
         return this.capacity.createPacman();

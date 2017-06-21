@@ -36,9 +36,9 @@ import fr.utbm.info.ia51.labwork1.environment.agent.RunBeginingOfStep;
 import fr.utbm.info.ia51.labwork1.environment.agent.RunEndOfStep;
 import fr.utbm.info.ia51.labwork1.environment.maze.AgentBody;
 import fr.utbm.info.ia51.labwork1.environment.maze.Direction;
-import fr.utbm.info.ia51.labwork1.environment.maze.GhostBody;
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanBody;
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanObject;
+import fr.utbm.info.ia51.labwork1.environment.maze.DriverBody;
+import fr.utbm.info.ia51.labwork1.environment.maze.GovBody;
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
 import fr.utbm.info.ia51.labwork1.players.Ghost;
 import io.sarl.core.DefaultContextInteractions;
 import io.sarl.core.Destroy;
@@ -127,7 +127,7 @@ public class Environment extends Agent {
     Controller _controller = new Controller(_defaultSpace, _defaultAddress);
     this.controller = _controller;
     MazeManager _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER = this.$castSkill(MazeManager.class, (this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER == null || this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER.get() == null) ? (this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER = this.$getSkill(MazeManager.class)) : this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER);
-    PacmanBody pacmanBody = _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER.createPacman();
+    GovBody pacmanBody = _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER.createPacman();
     UUID _agentId = pacmanBody.getAgentId();
     Logger _logger = Logger.getLogger(this.getID().toString());
     Player _player = new Player(_agentId, _logger);
@@ -136,7 +136,7 @@ public class Environment extends Agent {
     for (final Integer i_1 : _doubleDotLessThan_1) {
       {
         MazeManager _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER_1 = this.$castSkill(MazeManager.class, (this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER == null || this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER.get() == null) ? (this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER = this.$getSkill(MazeManager.class)) : this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER);
-        GhostBody ghostBody = _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER_1.createGhost((perceptionDistance).intValue());
+        DriverBody ghostBody = _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER_1.createGhost((perceptionDistance).intValue());
         Lifecycle _$CAPACITY_USE$IO_SARL_CORE_LIFECYCLE$CALLER = this.$castSkill(Lifecycle.class, (this.$CAPACITY_USE$IO_SARL_CORE_LIFECYCLE == null || this.$CAPACITY_USE$IO_SARL_CORE_LIFECYCLE.get() == null) ? (this.$CAPACITY_USE$IO_SARL_CORE_LIFECYCLE = this.$getSkill(Lifecycle.class)) : this.$CAPACITY_USE$IO_SARL_CORE_LIFECYCLE);
         DefaultContextInteractions _$CAPACITY_USE$IO_SARL_CORE_DEFAULTCONTEXTINTERACTIONS$CALLER_2 = this.$castSkill(DefaultContextInteractions.class, (this.$CAPACITY_USE$IO_SARL_CORE_DEFAULTCONTEXTINTERACTIONS == null || this.$CAPACITY_USE$IO_SARL_CORE_DEFAULTCONTEXTINTERACTIONS.get() == null) ? (this.$CAPACITY_USE$IO_SARL_CORE_DEFAULTCONTEXTINTERACTIONS = this.$getSkill(DefaultContextInteractions.class)) : this.$CAPACITY_USE$IO_SARL_CORE_DEFAULTCONTEXTINTERACTIONS);
         _$CAPACITY_USE$IO_SARL_CORE_LIFECYCLE$CALLER.spawnInContextWithID(Ghost.class, ghostBody.getAgentId(), _$CAPACITY_USE$IO_SARL_CORE_DEFAULTCONTEXTINTERACTIONS$CALLER_2.getDefaultContext());
@@ -148,10 +148,10 @@ public class Environment extends Agent {
   }
   
   protected void fireEnvironmentChange() {
-    TreeMap<Point2i, PacmanObject> objects = new TreeMap<Point2i, PacmanObject>();
+    TreeMap<Point2i, CityObject> objects = new TreeMap<Point2i, CityObject>();
     MazeManager _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER = this.$castSkill(MazeManager.class, (this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER == null || this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER.get() == null) ? (this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER = this.$getSkill(MazeManager.class)) : this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER);
-    List<PacmanObject> _pacmanObjects = _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER.getPacmanObjects();
-    for (final PacmanObject obj : _pacmanObjects) {
+    List<CityObject> _pacmanObjects = _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER.getPacmanObjects();
+    for (final CityObject obj : _pacmanObjects) {
       objects.put(obj.getPosition(), obj);
     }
     UUID _iD = this.getID();
@@ -159,7 +159,7 @@ public class Environment extends Agent {
     int _mazeWidth = _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER_1.getMazeWidth();
     MazeManager _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER_2 = this.$castSkill(MazeManager.class, (this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER == null || this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER.get() == null) ? (this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER = this.$getSkill(MazeManager.class)) : this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER);
     int _mazeHeight = _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER_2.getMazeHeight();
-    Map<Point2i, PacmanObject> _unmodifiableMap = Collections.<Point2i, PacmanObject>unmodifiableMap(objects);
+    Map<Point2i, CityObject> _unmodifiableMap = Collections.<Point2i, CityObject>unmodifiableMap(objects);
     EnvironmentEvent event = new EnvironmentEvent(_iD, this.time, _mazeWidth, _mazeHeight, _unmodifiableMap);
     for (final EnvironmentListener listener : this.listeners) {
       listener.environmentChanged(event);
@@ -262,8 +262,8 @@ public class Environment extends Agent {
     synchronized (this) {
       this.actions.clear();
       MazeManager _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER = this.$castSkill(MazeManager.class, (this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER == null || this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER.get() == null) ? (this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER = this.$getSkill(MazeManager.class)) : this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER);
-      Set<Map.Entry<AgentBody, List<PacmanObject>>> _entrySet = _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER.getPerceptions().entrySet();
-      for (final Map.Entry<AgentBody, List<PacmanObject>> e : _entrySet) {
+      Set<Map.Entry<AgentBody, List<CityObject>>> _entrySet = _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEMANAGER$CALLER.getPerceptions().entrySet();
+      for (final Map.Entry<AgentBody, List<CityObject>> e : _entrySet) {
         MazeFrontEnd _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEFRONTEND$CALLER = this.$castSkill(MazeFrontEnd.class, (this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEFRONTEND == null || this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEFRONTEND.get() == null) ? (this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEFRONTEND = this.$getSkill(MazeFrontEnd.class)) : this.$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEFRONTEND);
         _$CAPACITY_USE$FR_UTBM_INFO_IA51_LABWORK1_ENVIRONMENT_AGENT_MAZEFRONTEND$CALLER.sendPerception(this.time, e.getKey().getAgentId(), e.getValue(), e.getKey().getPosition());
       }

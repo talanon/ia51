@@ -23,10 +23,10 @@ package fr.utbm.info.ia51.labwork1.environment.agent;
 import fr.utbm.info.ia51.labwork1.environment.agent.MazeChangeQuery;
 import fr.utbm.info.ia51.labwork1.environment.agent.MazeManager;
 import fr.utbm.info.ia51.labwork1.environment.maze.AgentBody;
-import fr.utbm.info.ia51.labwork1.environment.maze.GhostBody;
+import fr.utbm.info.ia51.labwork1.environment.maze.DriverBody;
 import fr.utbm.info.ia51.labwork1.environment.maze.Maze;
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanBody;
-import fr.utbm.info.ia51.labwork1.environment.maze.PacmanObject;
+import fr.utbm.info.ia51.labwork1.environment.maze.GovBody;
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
 import fr.utbm.info.ia51.labwork1.environment.maze.SuperPowerAccessor;
 import io.sarl.lang.annotation.SarlElementType;
 import io.sarl.lang.annotation.SarlSpecification;
@@ -88,8 +88,8 @@ public class DefaultMazeManagerSkill extends Skill implements MazeManager {
   }
   
   @Pure
-  public Map<AgentBody, List<PacmanObject>> getPerceptions() {
-    TreeMap<AgentBody, List<PacmanObject>> perceptions = new TreeMap<AgentBody, List<PacmanObject>>();
+  public Map<AgentBody, List<CityObject>> getPerceptions() {
+    TreeMap<AgentBody, List<CityObject>> perceptions = new TreeMap<AgentBody, List<CityObject>>();
     return perceptions;
   }
   
@@ -104,14 +104,14 @@ public class DefaultMazeManagerSkill extends Skill implements MazeManager {
   }
   
   @Pure
-  public List<PacmanObject> getPacmanObjects() {
-    ArrayList<PacmanObject> list = CollectionLiterals.<PacmanObject>newArrayList();
+  public List<CityObject> getPacmanObjects() {
+    ArrayList<CityObject> list = CollectionLiterals.<CityObject>newArrayList();
     ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, this.width, true);
     for (final Integer i : _doubleDotLessThan) {
       ExclusiveRange _doubleDotLessThan_1 = new ExclusiveRange(0, this.height, true);
       for (final Integer j : _doubleDotLessThan_1) {
         {
-          PacmanObject o = this.maze.getObjectAt((i).intValue(), (j).intValue());
+          CityObject o = this.maze.getObjectAt((i).intValue(), (j).intValue());
           if ((o != null)) {
             list.add(o);
           }
@@ -131,12 +131,12 @@ public class DefaultMazeManagerSkill extends Skill implements MazeManager {
     return this.maze.getSuperPowerAccessorFor(id);
   }
   
-  public GhostBody createGhost(final int perceptionDistance) {
-    return this.maze.<GhostBody>createBody(GhostBody.class, null, perceptionDistance);
+  public DriverBody createGhost(final int perceptionDistance) {
+    return this.maze.<DriverBody>createBody(DriverBody.class, null, perceptionDistance);
   }
   
-  public PacmanBody createPacman() {
-    return this.maze.<PacmanBody>createBody(PacmanBody.class, null, 0);
+  public GovBody createPacman() {
+    return this.maze.<GovBody>createBody(GovBody.class, null, 0);
   }
   
   @Override

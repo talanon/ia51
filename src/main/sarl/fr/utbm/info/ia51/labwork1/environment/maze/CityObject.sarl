@@ -56,7 +56,7 @@ abstract class CityObject implements Serializable {
 			return true;
 		}
 		if (obj !== null && this.class == obj.class) {
-			var o = obj as PacmanObject
+			var o = obj as CityObject
 			return o.position == this.position
 		}
 		return false
@@ -95,10 +95,5 @@ abstract class CityObject implements Serializable {
 	 */
 	@Pure
 	abstract def isOccluder : boolean 
-	
-	/** Replies if this object could be pick by the agents.
-	 */
-	@Pure
-	abstract def isPickable : boolean
 
 }

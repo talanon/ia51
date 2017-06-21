@@ -22,7 +22,6 @@ package fr.utbm.info.ia51.labwork1.environment.maze
 
 import java.util.UUID
 
-import org.eclipse.xtext.xbase.lib.Pure
 import fr.utbm.info.ia51.framework.math.Point2i
 
 /**
@@ -41,11 +40,6 @@ class DriverBody extends AgentBody {
 
 	new (position : Point2i, maze : Maze, agentId : UUID, perceptionDistance : int) {
 		super(position, maze, agentId, perceptionDistance)
-	}
-
-	@Pure
-	final def isPickable : boolean {
-		false
 	}
 
 }

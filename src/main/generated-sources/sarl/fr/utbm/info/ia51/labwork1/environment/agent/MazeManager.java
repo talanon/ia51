@@ -20,12 +20,10 @@
  */
 package fr.utbm.info.ia51.labwork1.environment.agent;
 
-import fr.utbm.info.ia51.labwork1.environment.agent.MazeChangeQuery;
 import fr.utbm.info.ia51.labwork1.environment.maze.AgentBody;
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
 import fr.utbm.info.ia51.labwork1.environment.maze.DriverBody;
 import fr.utbm.info.ia51.labwork1.environment.maze.GovBody;
-import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
-import fr.utbm.info.ia51.labwork1.environment.maze.SuperPowerAccessor;
 import io.sarl.lang.annotation.SarlElementType;
 import io.sarl.lang.annotation.SarlSpecification;
 import io.sarl.lang.core.AgentTrait;
@@ -52,12 +50,6 @@ public interface MazeManager extends Capacity {
   public abstract int getBodyCount();
   
   /**
-   * Apply the list of actions.
-   * @return true if the pacman is dead.
-   */
-  public abstract boolean applyActions(final List<MazeChangeQuery> actions);
-  
-  /**
    * Replies the perceptions.
    */
   public abstract Map<AgentBody, List<CityObject>> getPerceptions();
@@ -75,7 +67,7 @@ public interface MazeManager extends Capacity {
   /**
    * Replies all the objects.
    */
-  public abstract List<CityObject> getPacmanObjects();
+  public abstract List<CityObject> getCityObjects();
   
   /**
    * Replies a specific body.
@@ -83,19 +75,14 @@ public interface MazeManager extends Capacity {
   public abstract AgentBody getAgentBody(final UUID id);
   
   /**
-   * Replies super power accessor.
+   * Create a driver body.
    */
-  public abstract SuperPowerAccessor getSuperPowerAccessor(final UUID id);
+  public abstract DriverBody createDriver(final int perceptionDistance);
   
   /**
-   * Create a ghost body.
+   * Create a gov body.
    */
-  public abstract DriverBody createGhost(final int perceptionDistance);
-  
-  /**
-   * Create a pacman body.
-   */
-  public abstract GovBody createPacman();
+  public abstract GovBody createGov(final int perceptionDistance);
   
   public static class ContextAwareCapacityWrapper<C extends MazeManager> extends Capacity.ContextAwareCapacityWrapper<C> implements MazeManager {
     public ContextAwareCapacityWrapper(final C capacity, final AgentTrait caller) {
@@ -106,15 +93,6 @@ public interface MazeManager extends Capacity {
       try {
         ensureCallerInLocalThread();
         return this.capacity.getBodyCount();
-      } finally {
-        resetCallerInLocalThread();
-      }
-    }
-    
-    public boolean applyActions(final List<MazeChangeQuery> actions) {
-      try {
-        ensureCallerInLocalThread();
-        return this.capacity.applyActions(actions);
       } finally {
         resetCallerInLocalThread();
       }
@@ -147,10 +125,10 @@ public interface MazeManager extends Capacity {
       }
     }
     
-    public List<CityObject> getPacmanObjects() {
+    public List<CityObject> getCityObjects() {
       try {
         ensureCallerInLocalThread();
-        return this.capacity.getPacmanObjects();
+        return this.capacity.getCityObjects();
       } finally {
         resetCallerInLocalThread();
       }
@@ -165,28 +143,19 @@ public interface MazeManager extends Capacity {
       }
     }
     
-    public SuperPowerAccessor getSuperPowerAccessor(final UUID id) {
+    public DriverBody createDriver(final int perceptionDistance) {
       try {
         ensureCallerInLocalThread();
-        return this.capacity.getSuperPowerAccessor(id);
+        return this.capacity.createDriver(perceptionDistance);
       } finally {
         resetCallerInLocalThread();
       }
     }
     
-    public DriverBody createGhost(final int perceptionDistance) {
+    public GovBody createGov(final int perceptionDistance) {
       try {
         ensureCallerInLocalThread();
-        return this.capacity.createGhost(perceptionDistance);
-      } finally {
-        resetCallerInLocalThread();
-      }
-    }
-    
-    public GovBody createPacman() {
-      try {
-        ensureCallerInLocalThread();
-        return this.capacity.createPacman();
+        return this.capacity.createGov(perceptionDistance);
       } finally {
         resetCallerInLocalThread();
       }

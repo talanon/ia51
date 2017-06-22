@@ -23,10 +23,8 @@ package fr.utbm.info.ia51.labwork1.environment.maze;
 import fr.utbm.info.ia51.framework.math.Point2i;
 import fr.utbm.info.ia51.framework.math.Vector2i;
 import fr.utbm.info.ia51.labwork1.environment.maze.AgentBody;
-import fr.utbm.info.ia51.labwork1.environment.maze.GovBody;
 import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
 import fr.utbm.info.ia51.labwork1.environment.maze.PillObject;
-import fr.utbm.info.ia51.labwork1.environment.maze.SuperPowerAccessor;
 import fr.utbm.info.ia51.labwork1.environment.maze.WallObject;
 import io.sarl.lang.annotation.SarlElementType;
 import io.sarl.lang.annotation.SarlSpecification;
@@ -281,7 +279,7 @@ public class Maze {
    */
   @Pure
   public synchronized boolean canMoveInside(final int x, final int y) {
-    return (((((x >= 0) && (y >= 0)) && (x < this.width)) && (y < this.height)) && ((this.grid[x][y] == null) || this.grid[x][y].isPickable()));
+    return (((((x >= 0) && (y >= 0)) && (x < this.width)) && (y < this.height)) && (this.grid[x][y] == null));
   }
   
   /**
@@ -310,7 +308,8 @@ public class Maze {
       Constructor<T> cons = bodyType.getDeclaredConstructor(int.class, int.class, Maze.class, UUID.class, int.class);
       T body = cons.newInstance(Integer.valueOf(x), Integer.valueOf(y), this, id, Integer.valueOf(perceptionDistance));
       this.grid[x][y] = body;
-      this.bodies.put(id, body);
+      final T _converted_body = (T)body;
+      this.bodies.put(id, _converted_body);
       return body;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
@@ -392,36 +391,6 @@ public class Maze {
   @Pure
   public AgentBody getAgentBody(final UUID id) {
     return this.bodies.get(id);
-  }
-  
-  /**
-   * Replies the accessors for managing the super power of Pacman.
-   * 
-   * @param id the id of Pacman.
-   * @return the accessor.
-   */
-  @Pure
-  public SuperPowerAccessor getSuperPowerAccessorFor(final UUID id) {
-    abstract class __Maze_0 extends SuperPowerAccessor {
-      public abstract void resetSuperPower();
-      
-      public abstract void decreaseSuperPower();
-    }
-    
-    AgentBody body = this.bodies.get(id);
-    if ((body instanceof GovBody)) {
-      final GovBody pacman = ((GovBody) body);
-      return new __Maze_0() {
-        public void resetSuperPower() {
-          pacman.resetSuperPower();
-        }
-        
-        public void decreaseSuperPower() {
-          pacman.decreaseSuperPower();
-        }
-      };
-    }
-    return new SuperPowerAccessor();
   }
   
   @Override

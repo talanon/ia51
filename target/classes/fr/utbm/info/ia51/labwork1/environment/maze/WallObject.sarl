@@ -31,7 +31,7 @@ import fr.utbm.info.ia51.framework.math.Point2i
  * @mavengroupid $GroupId$
  * @mavenartifactid $ArtifactId$
  */
-class WallObject extends PacmanObject {
+class WallObject extends CityObject {
 
 	new (x : int, y : int, maze : Maze) {
 		super(x, y, maze)

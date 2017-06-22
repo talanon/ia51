@@ -46,7 +46,7 @@ class Maze {
 
 	/** Matrix of the objects.
 	 */
-	val grid : PacmanObject[][] 
+	val grid : CityObject[][] 
 
 	val bodies = new TreeMap<UUID, AgentBody>
 
@@ -69,7 +69,7 @@ class Maze {
 	new (width : int, height : int) {
 		this.width = width
 		this.height = height
-		this.grid = Array::newInstance(PacmanObject, width, height) as PacmanObject[][]
+		this.grid = Array::newInstance(CityObject, width, height) as CityObject[][]
 
 		buildWorld(this.width, this.height);
 	}
@@ -180,7 +180,7 @@ class Maze {
 	@Pure
 	synchronized def canMoveInside(x : int, y : int) : boolean {
 		x >= 0 && y >= 0 && x < this.width && y < this.height
-		&& (this.grid.get(x).get(y) === null || this.grid.get(x).get(y).pickable)
+		&& (this.grid.get(x).get(y) === null)
 	}
 
 	/** Create a body of the given type.
@@ -229,7 +229,7 @@ class Maze {
 	 * @return the object or <code>null</code>.
 	 */
 	@Pure
-	def getObjectAt(x : int, y : int) : PacmanObject {
+	def getObjectAt(x : int, y : int) : CityObject {
 		if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
 			return this.grid.get(x).get(y)
 		}
@@ -243,7 +243,7 @@ class Maze {
 	 * @param obj the object to put at the position
 	 * @return the object in the cell before the change.
 	 */
-	def setObjectAt(x : int, y : int, obj : PacmanObject) : PacmanObject {
+	def setObjectAt(x : int, y : int, obj : CityObject) : CityObject {
 		if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
 			var old = this.grid.get(x).get(y)
 			this.grid.get(x).set(y, obj)
@@ -261,7 +261,7 @@ class Maze {
 	 * @param obj the object to put at the position
 	 * @return the object in the cell before the change.
 	 */
-	def setObjectAt(position : Point2i, obj : PacmanObject) : PacmanObject {
+	def setObjectAt(position : Point2i, obj : CityObject) : CityObject {
 		setObjectAt(position.x, position.y, obj)
 	}
 
@@ -288,7 +288,7 @@ class Maze {
 	 * @param id the id of Pacman.
 	 * @return the accessor.
 	 */
-	def getSuperPowerAccessorFor(id : UUID) : SuperPowerAccessor {
+	/*def getSuperPowerAccessorFor(id : UUID) : SuperPowerAccessor {
 		var body = this.bodies.get(id)
 		if (body instanceof PacmanBody) {
 			val pacman = body as PacmanBody
@@ -302,7 +302,7 @@ class Maze {
 			}
 		}
 		return new SuperPowerAccessor
-	}
+	}*/
 
 	/**
 	 * @author $Author: sgalland$

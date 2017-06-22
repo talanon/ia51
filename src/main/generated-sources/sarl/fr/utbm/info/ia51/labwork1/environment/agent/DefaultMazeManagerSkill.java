@@ -20,14 +20,12 @@
  */
 package fr.utbm.info.ia51.labwork1.environment.agent;
 
-import fr.utbm.info.ia51.labwork1.environment.agent.MazeChangeQuery;
 import fr.utbm.info.ia51.labwork1.environment.agent.MazeManager;
 import fr.utbm.info.ia51.labwork1.environment.maze.AgentBody;
-import fr.utbm.info.ia51.labwork1.environment.maze.DriverBody;
-import fr.utbm.info.ia51.labwork1.environment.maze.Maze;
-import fr.utbm.info.ia51.labwork1.environment.maze.GovBody;
 import fr.utbm.info.ia51.labwork1.environment.maze.CityObject;
-import fr.utbm.info.ia51.labwork1.environment.maze.SuperPowerAccessor;
+import fr.utbm.info.ia51.labwork1.environment.maze.DriverBody;
+import fr.utbm.info.ia51.labwork1.environment.maze.GovBody;
+import fr.utbm.info.ia51.labwork1.environment.maze.Maze;
 import io.sarl.lang.annotation.SarlElementType;
 import io.sarl.lang.annotation.SarlSpecification;
 import io.sarl.lang.annotation.SyntheticMember;
@@ -40,7 +38,6 @@ import java.util.TreeMap;
 import java.util.UUID;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
-import org.eclipse.xtext.xbase.lib.Inline;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 /**
@@ -82,11 +79,6 @@ public class DefaultMazeManagerSkill extends Skill implements MazeManager {
     return this.maze.getBodyCount();
   }
   
-  @Inline(value = "false", constantExpression = true)
-  public boolean applyActions(final List<MazeChangeQuery> actions) {
-    return false;
-  }
-  
   @Pure
   public Map<AgentBody, List<CityObject>> getPerceptions() {
     TreeMap<AgentBody, List<CityObject>> perceptions = new TreeMap<AgentBody, List<CityObject>>();
@@ -104,7 +96,7 @@ public class DefaultMazeManagerSkill extends Skill implements MazeManager {
   }
   
   @Pure
-  public List<CityObject> getPacmanObjects() {
+  public List<CityObject> getCityObjects() {
     ArrayList<CityObject> list = CollectionLiterals.<CityObject>newArrayList();
     ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, this.width, true);
     for (final Integer i : _doubleDotLessThan) {
@@ -126,17 +118,12 @@ public class DefaultMazeManagerSkill extends Skill implements MazeManager {
     return this.maze.getAgentBody(id);
   }
   
-  @Pure
-  public SuperPowerAccessor getSuperPowerAccessor(final UUID id) {
-    return this.maze.getSuperPowerAccessorFor(id);
-  }
-  
-  public DriverBody createGhost(final int perceptionDistance) {
+  public DriverBody createDriver(final int perceptionDistance) {
     return this.maze.<DriverBody>createBody(DriverBody.class, null, perceptionDistance);
   }
   
-  public GovBody createPacman() {
-    return this.maze.<GovBody>createBody(GovBody.class, null, 0);
+  public GovBody createGov(final int perceptionDistance) {
+    return this.maze.<GovBody>createBody(GovBody.class, null, perceptionDistance);
   }
   
   @Override

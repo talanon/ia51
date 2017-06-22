@@ -22,7 +22,6 @@ package fr.utbm.info.ia51.labwork1.environment.agent;
 
 import fr.utbm.info.ia51.labwork1.environment.agent.Controller;
 import fr.utbm.info.ia51.labwork1.environment.agent.EnvironmentEvent;
-import fr.utbm.info.ia51.labwork1.environment.agent.Player;
 import io.sarl.lang.annotation.SarlElementType;
 import io.sarl.lang.annotation.SarlSpecification;
 import java.util.EventListener;
@@ -39,16 +38,6 @@ import java.util.EventListener;
 @SarlElementType(9)
 @SuppressWarnings("all")
 public interface EnvironmentListener extends EventListener {
-  /**
-   * Invoked for binding the player to the simulated environment.
-   */
-  public abstract void bindPlayer(final Player player);
-  
-  /**
-   * Invoked for unbinding the player to the simulated environment.
-   */
-  public abstract void unbindPlayer(final Player player);
-  
   /**
    * Invoked for binding the controller of the simulated environment.
    */

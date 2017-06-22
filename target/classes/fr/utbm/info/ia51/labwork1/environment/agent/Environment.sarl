@@ -70,7 +70,7 @@ agent Environment {
 			var driverBody = createDriver(perceptionDistance)
 			spawnInContextWithID(typeof(Driver), driverBody.agentId, defaultContext)
 		}
-		firePlayerBinding
+		//firePlayerBinding
 		fireControllerBinding
 		fireEnvironmentChange
 	}
@@ -86,7 +86,7 @@ agent Environment {
 		}
 	}
 	
-	def firePlayerBinding {
+	/*def firePlayerBinding {
 		for (listener : this.listeners) {
 			listener.bindDriver(this.driver)
 		}
@@ -96,7 +96,7 @@ agent Environment {
 		for (listener : this.listeners) {
 			listener.unbindDriver(this.driver)
 		}
-	}
+	}*/
 
 	def fireControllerBinding {
 		for (listener : this.listeners) {

@@ -31,16 +31,15 @@ import java.util.EventListener
 */
 interface EnvironmentListener extends EventListener {
 
-     /** Invoked for binding the Driver to the simulated environment.
+    /* */ /** Invoked for binding the Driver to the simulated environment.
 	 */
-	def bindDriver(driver : Driver)
+	//def bindDriver(driver : Driver)
 	
 	/** Invoked for unbinding the Driver to the simulated environment.
 	 */
-	def unbindDriver(driver : Driver)
+	//def unbindDriver(driver : Driver)
 
-	/** Invoked for binding the controller of the simulated environment.
-	 */
+	/** Invoked for binding the controller of the simulated environment.*/
 	def bindController(controller : Controller)
 	
 	/** Invoked for unbinding the controller of the simulated environment.

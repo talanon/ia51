@@ -289,7 +289,31 @@ class CityGUI extends JFrame implements KeyListener, EnvironmentListener {
 				}
 			}
 		}
-
+	
+	override keyPressed(arg0 : KeyEvent) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
-
+	
+	override keyReleased(arg0 : KeyEvent) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	override keyTyped(arg0 : KeyEvent) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	/*override bindDriver(driver : Object) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	override unbindDriver(driver : Object) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}*/
+	
+	override gameOver {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
 }
+
+

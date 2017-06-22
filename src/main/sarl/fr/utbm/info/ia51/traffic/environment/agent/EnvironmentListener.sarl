@@ -1,0 +1,19 @@
+package fr.utbm.info.ia51.labwork1.environment.^agent
+
+import java.util.EventListener
+
+/** Space that is representing the Jaak environment.
+*/
+interface EnvironmentListener extends EventListener {
+
+	/** Invoked when the environment has changed.
+	 *
+	 * @param event
+	 */
+	def environmentChanged(^event : EnvironmentEvent)
+
+	/** Invoked when the game is over.
+	 */
+	def gameOver
+
+}

@@ -1,0 +1,39 @@
+package fr.utbm.info.ia51.traffic.environment.^agent
+
+import fr.utbm.info.ia51.framework.math.Point2i
+import fr.utbm.info.ia51.traffic.environment.city.*
+import java.util.List
+import java.util.UUID
+
+/** Perception for an agent.
+ */
+event Perception {
+	
+	val time : int
+	val objects : List<EnvrionmentObject>
+	val position : Point2i
+	val bodyId : UUID
+	
+	new (time : int, bodyID : UUID, objects : List<EnvrionmentObject>, position : Point2i) {
+		this.time = time
+		this.bodyId = bodyID
+		this.objects = objects
+		this.position = position
+	}
+	
+}
+
+/** Action from an agent.
+ */
+event Action {
+	
+	val time : int
+	val direction : Direction
+	
+	new (time : int, direction : Direction) {
+		this.time = time
+		this.direction = direction
+	}
+	
+}
+

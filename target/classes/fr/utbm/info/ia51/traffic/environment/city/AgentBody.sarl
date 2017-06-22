@@ -1,0 +1,55 @@
+package fr.utbm.info.ia51.labwork1.environment.city
+
+import java.util.UUID
+import fr.utbm.info.ia51.framework.math.Point2i
+
+/**
+ * Abstract element for all the agent bodies.
+ */
+abstract class AgentBody extends CityObject implements Comparable<AgentBody> {
+
+	val agentId : UUID
+	val perceptionDistance : int 
+	
+	new (x : int, y : int, city : City, agentId : UUID, perceptionDistance : int) {
+		super(x, y, city)
+		this.agentId = agentId
+		this.perceptionDistance = perceptionDistance
+	}
+
+	new (position : Point2i, city : City, agentId : UUID, perceptionDistance : int) {
+		super(position, city)
+		this.agentId = agentId
+		this.perceptionDistance = perceptionDistance
+	}
+	
+	/** Replies the distance of perception of the body.
+	 *
+	 * @return the distance.
+	 */
+	@Pure
+	def getPerceptionDistance : int {
+		this.perceptionDistance
+	}
+	
+	@Pure
+	final def getAgentId : UUID {
+		this.agentId
+	}
+
+	@Pure
+	final def isOccluder : boolean {
+		false
+	}
+	
+	def compareTo(o : AgentBody) : int {
+		if (o === this) {
+			return 0 
+		}
+		if (o === null) {
+			return Integer::MAX_VALUE
+		}
+		return this.agentId.compareTo(o.agentId)
+	}
+
+}

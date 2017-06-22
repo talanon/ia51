@@ -1,0 +1,54 @@
+package fr.utbm.info.ia51.traffic
+
+import io.janusproject.Boot
+import io.janusproject.util.LoggerCreator
+
+import java.util.logging.Level
+import fr.utbm.info.ia51.traffic.ui.CityGUI
+import fr.utbm.info.ia51.traffic.environment.^agent.Environment
+
+/**
+ * Launcher of the simulation framework.
+ *
+ * This launcher needs the {@link http://www.janusproject.io Janus platform}.
+ */
+class TrafficSimulator {
+	
+	/** Width of the world (in number of cells).
+	 */
+	public static val WIDTH = 25
+
+	/** Height of the world (in number of cells).
+	 */
+	public static val HEIGHT = 25
+
+	/** Number of drivers at the start-up.
+	 */
+	public static val NB_CARS = 5
+	
+	/** Percpetion distance for the agents.
+	 */
+	public static val PERCEPTION_DISTANCE = 5
+	
+	/** The UI will force the environment agent to wait for it.
+	 */
+	public static val WAITING_DURATION = 500
+	
+	static def main(args : String[]) : void {
+		Boot::setOffline(true)
+		Boot::setVerboseLevel(LoggerCreator::toInt(Level::INFO))
+		Boot::showJanusLogo
+		
+		var ui = new CityGUI(WAITING_DURATION)
+		
+		Boot::startJanus(
+				null,
+				typeof(Environment),
+				WIDTH,
+				HEIGHT,
+				NB_CARS,
+				PERCEPTION_DISTANCE,
+				ui)
+	}
+	
+}

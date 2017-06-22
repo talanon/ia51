@@ -1,0 +1,14 @@
+package fr.utbm.info.ia51.traffic.environment.city
+
+import java.util.EventListener;
+
+/**
+ * Listener on city's events.
+ */
+interface CityListener extends EventListener {
+
+	/** Invoked when the content of the maze has changed.
+	 */
+	def onCityChanged(city : City, time : int)
+	
+}

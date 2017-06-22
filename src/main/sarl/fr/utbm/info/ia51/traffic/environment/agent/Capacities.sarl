@@ -1,0 +1,131 @@
+package fr.utbm.info.ia51.traffic.environment.^agent
+
+import fr.utbm.info.ia51.framework.math.Point2i
+import fr.utbm.info.ia51.traffic.environment.city.*
+import io.sarl.core.Behaviors
+import io.sarl.core.DefaultContextInteractions
+import io.sarl.core.Lifecycle
+import io.sarl.lang.core.Address
+import java.util.BitSet
+import java.util.List
+import java.util.Map
+import java.util.Random
+import java.util.TreeMap
+import java.util.UUID
+
+/** Capacity to manage a city.
+ * 
+ * @author $Author: sgalland$
+ * @version $FullVersion$
+ * @mavengroupid $GroupId$
+ * @mavenartifactid $ArtifactId$
+ */
+capacity CityManager {
+	
+	/** Replies the number of bodies in the city */
+	def getBodyCount : int
+	
+	/** Replies the perceptions. */
+	def getPerceptions : Map<AgentBody, List<EnvrionmentObject>>
+	
+	/** Replies the width of the city. */
+	def getCityWidth : int
+
+	/** Replies the height of the city. */
+	def getCityHeight : int
+	
+	/** Replies all the objects. */
+	def getCityObjects : List<EnvrionmentObject>
+
+	/** Replies a specific body. */
+	def getAgentBody(id : UUID) : AgentBody
+
+	/** Create a driver body. */
+	def createDriver(perceptionDistance : int) : DriverBody
+	
+	/** Create a gov body.*/
+	def createGov(perceptionDistance : int) : GovBody
+
+
+}
+
+
+/** Capacity to move in the city.
+ */
+capacity CityMotion {
+	
+	def move(direction : Direction)
+
+}
+
+/** Skill for managing the city.
+ */
+skill DefaultCityManagerSkill implements CityManager {
+	
+	val random = new Random
+	
+	val width : int
+	val height : int
+	
+	var city : City
+	
+	new (width : int, height : int) {
+		this.width = width
+		this.height = height
+	}
+	
+	def install {
+		this.city = new City(this.width, this.height)
+	}
+	
+	def uninstall {
+		this.city = null
+	}
+	
+	def getBodyCount : int {
+		this.city.bodyCount
+	}
+	
+	
+	def getPerceptions : Map<AgentBody, List<EnvrionmentObject>> {
+		var perceptions = new TreeMap
+		// TODO Write the perception algorithm
+		return perceptions
+	}
+	
+	def getCityHeight : int {
+		this.height
+	}
+	
+	def getCityWidth : int {
+		this.width
+	}
+	
+	def getCityObjects : List<EnvrionmentObject> {
+		var list = newArrayList
+		for (i : 0..<this.width) {
+			for (j : 0..<this.height) {
+				var o = this.city.getObjectAt(i, j)
+				if (o !== null) {
+					list += o
+				}
+			}
+		}
+		return list
+	}
+	
+	def getAgentBody(id : UUID) : AgentBody {
+		this.city.getAgentBody(id)
+	}
+
+	def createDriver(perceptionDistance : int) : DriverBody {
+		this.city.createBody(typeof(DriverBody), null, perceptionDistance);
+	}
+
+	def createGov(perceptionDistance : int) : GovBody {
+		this.city.createBody(typeof(GovBody), null, perceptionDistance);
+	}
+	
+	
+}
+

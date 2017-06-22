@@ -1,0 +1,40 @@
+package fr.utbm.info.ia51.labwork1.environment.^agent
+
+import fr.utbm.info.ia51.framework.math.Point2i
+import fr.utbm.info.ia51.labwork1.environment.maze.CityObject
+import java.util.List
+import java.util.UUID
+import fr.utbm.info.ia51.labwork1.environment.maze.Direction
+
+/** Perception for an agent.
+ */
+event Perception {
+	
+	val time : int
+	val objects : List<CityObject>
+	val position : Point2i
+	val bodyId : UUID
+	
+	new (time : int, bodyID : UUID, objects : List<CityObject>, position : Point2i) {
+		this.time = time
+		this.bodyId = bodyID
+		this.objects = objects
+		this.position = position
+	}
+	
+}
+
+/** Action from an agent.
+ */
+event Action {
+	
+	val time : int
+	val direction : Direction
+	
+	new (time : int, direction : Direction) {
+		this.time = time
+		this.direction = direction
+	}
+	
+}
+

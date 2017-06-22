@@ -1,0 +1,10 @@
+/** 
+ * 
+ */
+package fr.utbm.info.ia51.traffic.environment.city
+/** 
+ * @author Léo
+ * 
+ */
+class RoadObject extends EnvironmentObject {
+}

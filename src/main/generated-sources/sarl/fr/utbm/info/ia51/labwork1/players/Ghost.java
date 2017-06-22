@@ -20,10 +20,10 @@
  */
 package fr.utbm.info.ia51.labwork1.players;
 
-import fr.utbm.info.ia51.labwork1.environment.agent.DefaultMazeMotionSkill;
-import fr.utbm.info.ia51.labwork1.environment.agent.MazeMotion;
 import fr.utbm.info.ia51.labwork1.environment.agent.PacManIsDead;
 import fr.utbm.info.ia51.labwork1.environment.agent.Perception;
+import fr.utbm.info.ia51.traffic.environment.agent.DefaultMazeMotionSkill;
+import fr.utbm.info.ia51.traffic.environment.agent.MazeMotion;
 import io.sarl.core.Initialize;
 import io.sarl.core.Lifecycle;
 import io.sarl.lang.annotation.ImportedCapacityFeature;

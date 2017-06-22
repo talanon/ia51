@@ -1,0 +1,43 @@
+package fr.utbm.info.ia51.traffic.environment.city
+
+import java.io.Serializable
+import java.util.Objects
+
+import org.eclipse.xtext.xbase.lib.Pure
+
+
+/** 
+ * @author Léo
+ * 
+ */
+class EnvrionmentObject implements Serializable {
+	
+	val position : float
+
+	new (x : int, y : int, city : City) {
+		this.position = 
+	}
+	
+	/** Replies the position of the object.
+	 * 
+	 * @return the position.
+	 
+	@Pure
+	def getPosition : float {
+		this.position.clone()
+	 * }
+	 */
+	
+	/** Change the position of the object.
+	 
+	package def setPosition(x : int, y : int) : void {
+		this.position.set(x, y)
+	 * }
+	 */
+	 
+	/** Replies if this object occludes other objects during the agent's perception.
+	 
+	@Pure
+ * abstract def isOccluder : boolean
+ */
+}
